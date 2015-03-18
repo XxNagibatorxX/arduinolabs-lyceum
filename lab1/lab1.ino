@@ -1,9 +1,4 @@
-﻿/*
-*     Лабораторная работа 1
-*     "Счетчик нажатий"
-*     Автор: ПРОГИБАТОР(Суворов Игорь)
-*     Дата создания: Гыгы
-*/
+﻿
 
 #define PIN_A 2
 #define PIN_B 3
@@ -13,6 +8,8 @@
 #define PIN_F 7
 #define PIN_G 8
 #define PIN_P 9
+#define BUTTON_UP 10
+#define BUTTON_DOWN 11
 
 int number=0;
 
@@ -38,12 +35,17 @@ void setup(){
   pinMode(PIN_F,OUTPUT);
   pinMode(PIN_G,OUTPUT);
   pinMode(PIN_P,OUTPUT);
+  pinMode(BUTTON_DOWN,INPUT_PULLUP);
+  pinMode(BUTTON_UP, INPUT_PULLUP);
 }
 void loop() {
+  if(digitalRead(BUTTON_UP)) number+=1;
+  if(digitalRead(BUTTON_DOWN)) number-=1;
   showDigit(number);
   delay(1000);
-  number++;
+  //number++;
   if(number == 10) number = 0;
+  if(number == -1) number = 9;
 }
   void showDigit(int i){
 digitalWrite(PIN_A ,digit[i]&(1<<0));
