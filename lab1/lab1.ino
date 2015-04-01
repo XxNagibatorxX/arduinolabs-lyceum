@@ -1,5 +1,4 @@
-﻿
-
+#include <Bounce.h>
 #define PIN_A 2
 #define PIN_B 3
 #define PIN_C 4
@@ -12,6 +11,8 @@
 #define BUTTON_DOWN 11
 
 int number=0;
+Bounce bouncerUp = Bounce (BUTTON_UP, 5);
+Bounce bouncerDown = Bounce (BUTTON_DOWN, 5);
 
 byte digit[10] = {
   0b00111111,
@@ -39,15 +40,25 @@ void setup(){
   pinMode(BUTTON_UP, INPUT_PULLUP);
 }
 void loop() {
+  if(bouncerUp.update()) {
+    if(bouncerUp.read() == LOW) {
+      number-=1;
+    }
+  }
+  if(bouncerDown.update()) {
+    if(bouncerDown.read() == LOW){
+      number+=1;
+    }
+  }
   if(digitalRead(BUTTON_UP)) number+=1;
   if(digitalRead(BUTTON_DOWN)) number-=1;
   showDigit(number);
-  delay(1000);
+ // delay(1000);
   //number++;
-  if(number == 10) number = 0;
-  if(number == -1) number = 9;
+  //if(number == 10) number = 0;
+  //if(number == -1) number = 9;
 }
-  void showDigit(int i){
+  void showDigit(int i) {
 digitalWrite(PIN_A ,digit[i]&(1<<0));
 digitalWrite(PIN_B ,digit[i]&(1<<1));
 digitalWrite(PIN_C ,digit[i]&(1<<2));

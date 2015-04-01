@@ -1,3 +1,4 @@
+#include <Bounce.h>
 #define BUTTON_UP 10
 #define BUTTON_DOWN 11
 
