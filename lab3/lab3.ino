@@ -25,12 +25,15 @@ SPI.begin();
 }
 
 void loop(){
-for(int i=0; i<8; i++){
+drawLine();
+}
+void drawLine() {
+	for(int i=0; i<8; i++){
 	digitalWrite(SS_PIN, LOW);
-	SPI.transfer(digit[i]);
+	SPI.transfer(0xFF -(1<<i));
+	SPI.transfer(0xFF);
 	digitalWrite(SS_PIN, HIGH);
-	delay(500);
+	delay(125);
 }
 
 }
-
